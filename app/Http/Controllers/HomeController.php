@@ -49,11 +49,11 @@ class HomeController extends Controller
         $messages = [
             [
                 'role' => 'system',
-                'content' => 'Welcome to the Ultimate Word Battle! You will receive two words: the previous word and the players new guess. The words can be anything! Your job is to determine which word wins based on strength or logic, following a rock-paper-scissors-style dynamic. Be fun and engaging in your responses and answer very short! The player won, if the new word beats the previous word.'
+                'content' => 'Welcome to the Ultimate Word Battle! You will receive two words: the previous word and the players new guess. The words can be anything! Your job is to determine which word wins based on strength or logic, following a rock-paper-scissors-style dynamic. The player won if the current guess beats the previous guess.'
             ],
             [
                 'role' => 'user',
-                'content' => "Previous Guess: {$validated['prev']}, Current Guess: {$validated['guess']}"
+                'content' => "Previous Guess (old): {$validated['prev']}, Current Guess (new): {$validated['guess']}"
             ]
         ];
 
@@ -64,19 +64,22 @@ class HomeController extends Controller
                 'schema' => [
                     'type' => 'object',
                     'properties' => [
-                        'win' => [
-                            'type' => 'boolean'
+                        'won' => [
+                            'type' => 'boolean',
                         ],
                         'explanation' => [
-                            'type' => 'string'
+                            'type' => 'string',
+                            'description' => 'A very short fun and engaging explanation'
                         ],
                         'emoji' => [
-                            'type' => 'string'
+                            'type' => 'string',
+                            'description' => 'An emoji representing the current guess'
                         ]
                     ],
-                    'required' => ['win', 'explanation', 'emoji'],
+                    'required' => ['won', 'explanation', 'emoji'],
                     'additionalProperties' => false
-                ]
+                ],
+                'strict' => true
             ]
         ];
 

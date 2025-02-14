@@ -54,7 +54,7 @@ function guess() {
             guess: currentGuess.value.toLowerCase(),
         })
         .then((response) => {
-            if (response.data.win) {
+            if (response.data.won) {
                 prevGuess.value = currentGuess.value.toLowerCase();
                 prevGuessesList.value.push(prevGuess.value.toLowerCase());
 
