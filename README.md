@@ -1,5 +1,11 @@
 # What beats rock
 
+<p align="center">
+  <img src="https://github.com/user-attachments/assets/bfa8e99b-bbae-4129-ae37-8994cb3fecd9" />
+</p>
+
+---
+
 ## Installation
 
 Follow these steps to get the application up and running on your local machine:
