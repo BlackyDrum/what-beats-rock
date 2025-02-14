@@ -1,5 +1,5 @@
 <script setup>
-import { effect, nextTick, ref } from "vue";
+import { nextTick, onMounted, ref } from "vue";
 import { useToast } from "primevue/usetoast";
 import { Head } from "@inertiajs/vue3";
 
@@ -22,6 +22,10 @@ const gameLost = ref(false);
 const score = ref(0);
 
 const input = ref();
+
+onMounted(() => {
+    input.value.focus();
+});
 
 function guess() {
     if (currentGuess.value.length === 0 || isSendingRequest.value) return;
@@ -95,6 +99,10 @@ function restart() {
     currentExplanation.value = "";
     currentGid.value = uuidv4();
     prevGuessesList.value = ["rock"];
+
+    nextTick(() => {
+        input.value.focus();
+    });
 }
 
 function uuidv4() {
