@@ -23,9 +23,13 @@ class HomeController extends Controller
     {
         $validated = $request->validate([
             'gid' => 'required|string',
-            'prev' => 'required|string',
-            'guess' => 'required|string'
+            'prev' => 'required|string|max:64',
+            'guess' => 'required|string|max:64'
         ]);
+
+        if (!$this->isValidCustomUUID($validated['gid'])) {
+            return response()->json(['message' => 'Incorrectly formed UUID.'], 400);
+        }
 
         DB::beginTransaction();
 
@@ -110,5 +114,11 @@ class HomeController extends Controller
         DB::commit();
 
         return response()->json($result);
+    }
+
+    private function isValidCustomUUID(string $uuid): bool
+    {
+        $pattern = '/^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[0-9a-f]{4}-[0-9a-f]{12}$/i';
+        return preg_match($pattern, $uuid) === 1;
     }
 }
