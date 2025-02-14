@@ -1,4 +1,4 @@
-## What beats rock
+# What beats rock
 
 ## Installation
 
