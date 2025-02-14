@@ -22,7 +22,7 @@ $ cd what-beats-rock
 $ composer install
 ```
 
-4. Create a copy of the `.env.example` file and rename it to `.env`. Update the necessary configuration values, such as database credentials and `OPENROUTER_API_KEY`
+4. Create a copy of the `.env.example` file and rename it to `.env`. Update the necessary configuration values, such as database credentials and `OPENROUTER_API_KEY`.
 
 5. Generate an application key:
 
@@ -58,4 +58,4 @@ $ php artisan serve
 
 ## Acknowledgements
 
--   Original game by [khoi](https://x.com/dragon_khoi) and [kyle](https://x.com/qualiaspace). Check it out [here](https://www.whatbeatsrock.com/)
+-   Original game by [khoi](https://x.com/dragon_khoi) and [kyle](https://x.com/qualiaspace). Check it out [here](https://www.whatbeatsrock.com/).
