@@ -49,7 +49,7 @@ class HomeController extends Controller
         $messages = [
             [
                 'role' => 'system',
-                'content' => 'Welcome to the Ultimate Word Battle! You will receive two words: the previous word and the players new guess. The words can be anything! Your job is to determine which word wins based on strength or logic, following a rock-paper-scissors-style dynamic. The player won if the current guess beats the previous guess.'
+                'content' => 'We are playing an extended version of rock, paper, scissors, except players get to pick literally anything. You should decide whether each guess beats the previuos guess. You should provide very short witty and snarky explanations.'
             ],
             [
                 'role' => 'user',
@@ -68,8 +68,7 @@ class HomeController extends Controller
                             'type' => 'boolean',
                         ],
                         'explanation' => [
-                            'type' => 'string',
-                            'description' => 'A very short fun and engaging explanation'
+                            'type' => 'string'
                         ],
                         'emoji' => [
                             'type' => 'string',
