@@ -38,7 +38,7 @@ class HomeController extends Controller
         if ($guess || strtolower($validated['guess']) === 'rock') {
             DB::rollBack();
 
-            return response()->json(['message' => 'No repeated guesses! Try something else.'], 400);
+            return response()->json(['message' => 'No repeated guesses! Try something else.'], 403);
         }
 
         $currentGuess = Guess::query()->create([
