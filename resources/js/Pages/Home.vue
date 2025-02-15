@@ -1,5 +1,5 @@
 <script setup>
-import { nextTick, onMounted, ref } from "vue";
+import { nextTick, onBeforeMount, onMounted, ref } from "vue";
 import { useToast } from "primevue/usetoast";
 import { Head } from "@inertiajs/vue3";
 
@@ -20,8 +20,13 @@ const isSendingRequest = ref(false);
 
 const gameLost = ref(false);
 const score = ref(0);
+const highscore = ref(0);
 
 const input = ref();
+
+onBeforeMount(() => {
+    highscore.value = window.localStorage.getItem("highscore") ?? 0;
+});
 
 onMounted(() => {
     input.value.focus();
@@ -63,6 +68,11 @@ function guess() {
                 score.value++;
             } else {
                 gameLost.value = true;
+
+                if (score.value > highscore.value) {
+                    highscore.value = score.value;
+                    window.localStorage.setItem("highscore", score.value);
+                }
             }
 
             currentExplanation.value = response.data.explanation;
@@ -150,7 +160,12 @@ function uuidv4() {
                 </button>
             </form>
 
-            <div class="mt-2 opacity-70 text-sm">Score: {{ score }}</div>
+            <div class="mt-2 opacity-70 text-sm">
+                Score: {{ score }}
+                <span class="text-xs font-semibold">
+                    (Highscore: {{ highscore }})</span
+                >
+            </div>
 
             <div
                 class="flex flex-wrap mt-3 w-1/2 justify-center"
