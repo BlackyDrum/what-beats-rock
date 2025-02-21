@@ -1,12 +1,13 @@
 <script setup>
 import { nextTick, onBeforeMount, onMounted, ref } from "vue";
 import { useToast } from "primevue/usetoast";
-import { Head } from "@inertiajs/vue3";
+import { Head, Link, usePage } from "@inertiajs/vue3";
 
 import Toast from "primevue/toast";
 import { Button } from "primevue";
 
 const toast = useToast();
+const page = usePage();
 
 const prevGuess = ref("rock");
 const currentGuess = ref("");
@@ -130,66 +131,86 @@ function uuidv4() {
 
     <Head title="What beats rock" />
 
-    <div class="h-dvh mx-4 sm:mx-32 md:mx-48 lg:mx-72 xl:mx-96">
-        <div
-            class="flex flex-col pb-48 w-full items-center top-[20%] justify-start relative"
-        >
-            <p class="text-3xl font-bold">what beats</p>
-            <p class="text-2xl text-center">{{ prevGuess }}?</p>
-
-            <p class="w-1/2 mt-2 text-center">{{ currentExplanation }}</p>
-
-            <p class="text-5xl my-5">{{ gameLost ? "❌" : currentEmoji }}</p>
-
-            <form @submit.prevent="guess" v-if="!gameLost">
-                <input
-                    v-model="currentGuess"
-                    @input="handleInput"
-                    :disabled="isSendingRequest"
-                    ref="input"
-                    class="pl-4 py-4 text-lg border border-1-black"
-                /><button
-                    :disabled="isSendingRequest"
-                    type="submit"
-                    class="p-4 border border-1-black text-lg bg-green-200"
-                >
-                    <div v-if="isSendingRequest">
-                        <i class="pi pi-spin pi-spinner"></i>
-                    </div>
-                    <div v-else>GO</div>
-                </button>
-            </form>
-
-            <div class="mt-2 opacity-70 text-sm">
-                Score: {{ score }}
-                <span class="text-xs font-semibold">
-                    (Highscore: {{ highscore }})</span
-                >
-            </div>
-
-            <div
-                class="flex flex-wrap mt-3 w-1/2 justify-center"
-                v-if="prevGuessesList.length > 1"
+    <div class="bg-gray-100">
+        <div class="p-4">
+            <Link
+                v-if="!page.props.auth.user"
+                href="/login"
+                class="underline font-bold"
+                >Sign In</Link
             >
-                <div
-                    v-for="(prevGuess, index) in prevGuessesList
-                        .slice()
-                        .reverse()"
-                >
-                    <span class="font-semibold mx-1">{{ prevGuess }}</span>
-                    <template v-if="index !== prevGuessesList.length - 1"
-                        >🤜</template
+            <Link
+                v-else
+                href="/logout"
+                method="post"
+                class="underline font-bold"
+                >Logout</Link
+            >
+        </div>
+
+        <div class="h-dvh mx-4 sm:mx-32 md:mx-48 lg:mx-72 xl:mx-96">
+            <div
+                class="flex flex-col pb-48 w-full items-center top-[20%] justify-start relative"
+            >
+                <p class="text-3xl font-bold">what beats</p>
+                <p class="text-2xl text-center">{{ prevGuess }}?</p>
+
+                <p class="w-1/2 mt-2 text-center">{{ currentExplanation }}</p>
+
+                <p class="text-5xl my-5">
+                    {{ gameLost ? "❌" : currentEmoji }}
+                </p>
+
+                <form @submit.prevent="guess" v-if="!gameLost">
+                    <input
+                        v-model="currentGuess"
+                        @input="handleInput"
+                        :disabled="isSendingRequest"
+                        ref="input"
+                        class="pl-4 py-4 text-lg border border-1-black"
+                    /><button
+                        :disabled="isSendingRequest"
+                        type="submit"
+                        class="p-4 border border-1-black text-lg bg-green-200"
+                    >
+                        <div v-if="isSendingRequest">
+                            <i class="pi pi-spin pi-spinner"></i>
+                        </div>
+                        <div v-else>GO</div>
+                    </button>
+                </form>
+
+                <div class="mt-2 opacity-70 text-sm">
+                    Score: {{ score }}
+                    <span class="text-xs font-semibold">
+                        (Highscore: {{ highscore }})</span
                     >
                 </div>
-            </div>
 
-            <div v-if="gameLost" class="w-full text-center">
-                <Button
-                    class="mt-10 w-1/2"
-                    severity="info"
-                    @click="restart"
-                    label="Restart"
-                />
+                <div
+                    class="flex flex-wrap mt-3 w-1/2 justify-center"
+                    v-if="prevGuessesList.length > 1"
+                >
+                    <div
+                        v-for="(prevGuess, index) in prevGuessesList
+                            .slice()
+                            .reverse()"
+                    >
+                        <span class="font-semibold mx-1">{{ prevGuess }}</span>
+                        <template v-if="index !== prevGuessesList.length - 1"
+                            >🤜</template
+                        >
+                    </div>
+                </div>
+
+                <div v-if="gameLost" class="w-full text-center">
+                    <Button
+                        class="mt-10 w-1/2"
+                        severity="info"
+                        @click="restart"
+                        label="Restart"
+                    />
+                </div>
             </div>
         </div>
     </div>
