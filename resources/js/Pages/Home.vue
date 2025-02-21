@@ -10,7 +10,7 @@ const toast = useToast();
 
 const prevGuess = ref("rock");
 const currentGuess = ref("");
-const currentEmoji = ref("🗿");
+const currentEmoji = ref("🪨");
 const currentExplanation = ref("");
 const currentGid = ref("");
 
