@@ -62,6 +62,9 @@ $ php artisan serve
 
 10. Visit `http://localhost:8000` in your web browser to access the application.
 
+## OAuth Authentication
+To enable login with Google or GitHub, you need to create OAuth apps on their respective platforms and set the ``client ID``, ``client secret`` and ``client callback`` in the ``.env`` file.
+
 ## Acknowledgements
 
 -   Original game by [khoi](https://x.com/dragon_khoi) and [kyle](https://x.com/qualiaspace). Check it out [here](https://www.whatbeatsrock.com/).
