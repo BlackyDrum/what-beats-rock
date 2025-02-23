@@ -21,6 +21,7 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'highscore',
         'email_verified_at'
     ];
 

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Game;
 use App\Models\Guess;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -112,6 +113,18 @@ class HomeController extends Controller
         }
 
         $result = json_decode($response->json()['choices'][0]['message']['content'], true);
+
+        if (!$result['won'] && Auth::check()) {
+            $guesses = Guess::query()->where('game_id', '=', $currentGame['id'])->get();
+
+            $currentGameScore = $guesses->count() - 1;
+
+            if ($currentGameScore > Auth::user()->highscore) {
+                User::find(Auth::id())->update([
+                    'highscore' => $currentGameScore
+                ]);
+            }
+        }
 
         DB::commit();
 

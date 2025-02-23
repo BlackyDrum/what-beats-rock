@@ -64,6 +64,10 @@ function guess() {
                 score.value++;
             } else {
                 gameLost.value = true;
+
+                if (score.value > page.props.highscore) {
+                    page.props.highscore = score.value;
+                }
             }
 
             currentExplanation.value = response.data.explanation;
