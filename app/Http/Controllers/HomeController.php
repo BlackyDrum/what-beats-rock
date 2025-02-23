@@ -38,6 +38,8 @@ class HomeController extends Controller
 
         $currentGame = Game::firstOrCreate([
             'gid' => $validated['gid']
+        ], [
+            'user_id' => Auth::check() ? Auth::id() : null,
         ]);
 
         $guess = Guess::query()->where('guess', '=', strtolower($validated['guess']))->where('game_id', '=', $currentGame['id'])->first();
