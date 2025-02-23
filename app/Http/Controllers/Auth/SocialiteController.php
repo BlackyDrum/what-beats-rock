@@ -15,7 +15,7 @@ class SocialiteController extends Controller
 {
     public function github()
     {
-        $githubUser = Socialite::driver('github')->user();
+        $githubUser = Socialite::driver('github')->stateless()->user();
 
         $user = User::updateOrCreate([
             'email' => $githubUser->email,
@@ -33,7 +33,7 @@ class SocialiteController extends Controller
 
     public function google()
     {
-        $googleUser = Socialite::driver('google')->user();
+        $googleUser = Socialite::driver('google')->stateless()->user();
 
         $user = User::updateOrCreate([
             'email' => $googleUser->email,
