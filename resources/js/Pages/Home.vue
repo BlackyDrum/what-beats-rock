@@ -21,13 +21,8 @@ const isSendingRequest = ref(false);
 
 const gameLost = ref(false);
 const score = ref(0);
-const highscore = ref(0);
 
 const input = ref();
-
-onBeforeMount(() => {
-    highscore.value = window.localStorage.getItem("highscore") ?? 0;
-});
 
 onMounted(() => {
     input.value.focus();
@@ -69,11 +64,6 @@ function guess() {
                 score.value++;
             } else {
                 gameLost.value = true;
-
-                if (score.value > highscore.value) {
-                    highscore.value = score.value;
-                    window.localStorage.setItem("highscore", score.value);
-                }
             }
 
             currentExplanation.value = response.data.explanation;
@@ -182,8 +172,15 @@ function uuidv4() {
 
                 <div class="mt-2 opacity-70 text-sm">
                     Score: {{ score }}
-                    <span class="text-xs font-semibold">
-                        (Highscore: {{ highscore }})</span
+                    <span
+                        v-if="!page.props.auth.user"
+                        class="text-xs font-semibold"
+                    >
+                        (<Link class="underline" href="/login">Sign In</Link> to
+                        view highscore)
+                    </span>
+                    <span v-else class="text-xs font-semibold">
+                        (Highscore: {{ page.props.highscore }})</span
                     >
                 </div>
 

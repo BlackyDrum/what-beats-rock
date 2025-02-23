@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Game;
 use App\Models\Guess;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Log;
@@ -14,7 +15,9 @@ class HomeController extends Controller
 {
     public function index(Request $request)
     {
-        return Inertia::render('Home');
+        return Inertia::render('Home', [
+            'highscore' => Auth::check() ? Auth::user()->highscore : 0,
+        ]);
     }
 
 
