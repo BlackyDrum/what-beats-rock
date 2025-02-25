@@ -45,6 +45,10 @@ class HomeController extends Controller
             return response()->json(['message' => 'Incorrectly formed UUID.'], 400);
         }
 
+        if (preg_match('~[0-9]+~', $validated['guess'])) {
+            return response()->json(['message' => 'You can\'t use numbers.'], 400);
+        }
+
         DB::beginTransaction();
 
         $currentGame = Game::firstOrCreate([
