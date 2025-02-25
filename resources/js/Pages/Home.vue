@@ -6,6 +6,9 @@ import { Head, Link, usePage } from "@inertiajs/vue3";
 import Toast from "primevue/toast";
 import { Button } from "primevue";
 
+import DataTable from "primevue/datatable";
+import Column from "primevue/column";
+
 const toast = useToast();
 const page = usePage();
 
@@ -212,6 +215,13 @@ function uuidv4() {
                         label="Restart"
                     />
                 </div>
+            </div>
+            <div class="mt-20 text-center xl:w-3/4 mx-auto">
+                <DataTable :value="page.props.leaderboard">
+                    <Column field="rank" header="Rank"></Column>
+                    <Column field="name" header="Player"></Column>
+                    <Column field="highscore" header="Score"></Column>
+                </DataTable>
             </div>
         </div>
     </div>

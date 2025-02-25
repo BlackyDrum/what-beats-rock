@@ -16,8 +16,19 @@ class HomeController extends Controller
 {
     public function index(Request $request)
     {
+        $leaderboard = User::query()
+            ->select('name', 'highscore')
+            ->orderBy('highscore', 'desc')
+            ->limit(50)
+            ->get()
+            ->map(function ($entry, $index) {
+                $entry['rank'] = ++$index;
+                return $entry;
+            });
+
         return Inertia::render('Home', [
             'highscore' => Auth::check() ? Auth::user()->highscore : 0,
+            'leaderboard' => $leaderboard
         ]);
     }
 
