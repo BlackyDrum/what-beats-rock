@@ -103,7 +103,7 @@ function restart() {
     score.value = 0;
     prevGuess.value = "rock";
     currentGuess.value = "";
-    currentEmoji.value = "🗿";
+    currentEmoji.value = "🪨";
     currentExplanation.value = "";
     currentGid.value = uuidv4();
     prevGuessesList.value = ["rock"];
