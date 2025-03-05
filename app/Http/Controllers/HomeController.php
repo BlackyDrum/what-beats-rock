@@ -37,7 +37,6 @@ class HomeController extends Controller
     {
         $validated = $request->validate([
             'gid' => 'required|string',
-            'prev' => 'required|string|max:64',
             'guess' => 'required|string|max:64'
         ]);
 
@@ -57,13 +56,21 @@ class HomeController extends Controller
             'user_id' => Auth::check() ? Auth::id() : null,
         ]);
 
-        $guess = Guess::query()->where('guess', '=', strtolower($validated['guess']))->where('game_id', '=', $currentGame['id'])->first();
+        $guess = Guess::query()
+            ->where('guess', '=', strtolower($validated['guess']))
+            ->where('game_id', '=', $currentGame['id'])
+            ->first();
 
         if ($guess || strtolower($validated['guess']) === 'rock') {
             DB::rollBack();
 
             return response()->json(['message' => 'No repeated guesses! Try something else.'], 403);
         }
+
+        $prevGuess = Guess::query()
+            ->where('game_id', $currentGame['id'])
+            ->latest()
+            ->value('guess') ?? 'rock';
 
         $currentGuess = Guess::query()->create([
             'guess' => $validated['guess'],
@@ -77,7 +84,7 @@ class HomeController extends Controller
             ],
             [
                 'role' => 'user',
-                'content' => "Previous Guess (old): {$validated['prev']}, Current Guess (new): {$validated['guess']}"
+                'content' => "Previous Guess (old): $prevGuess, Current Guess (new): {$validated['guess']}"
             ]
         ];
 

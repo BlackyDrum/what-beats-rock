@@ -54,7 +54,6 @@ function guess() {
     window.axios
         .post("/guess", {
             gid: currentGid.value,
-            prev: prevGuess.value.toLowerCase(),
             guess: currentGuess.value.toLowerCase(),
         })
         .then((response) => {
@@ -89,7 +88,9 @@ function guess() {
             isSendingRequest.value = false;
 
             nextTick(() => {
-                input.value.focus();
+                if (!gameLost.value) {
+                    input.value.focus();
+                }
             });
         });
 }
