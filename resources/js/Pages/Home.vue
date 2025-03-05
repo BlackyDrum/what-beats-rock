@@ -118,7 +118,7 @@ function uuidv4() {
         (
             +c ^
             (crypto.getRandomValues(new Uint8Array(1))[0] & (15 >> (+c / 4)))
-        ).toString(16)
+        ).toString(16),
     );
 }
 </script>
@@ -133,28 +133,28 @@ function uuidv4() {
             <Link
                 v-if="!page.props.auth.user"
                 href="/login"
-                class="underline font-bold"
+                class="font-bold underline"
                 >Sign In</Link
             >
             <Link
                 v-else
                 href="/logout"
                 method="post"
-                class="underline font-bold"
+                class="font-bold underline"
                 >Logout</Link
             >
         </div>
 
-        <div class="h-dvh mx-4 sm:mx-32 md:mx-48 lg:mx-72 xl:mx-96">
+        <div class="mx-4 h-dvh sm:mx-32 md:mx-48 lg:mx-72 xl:mx-96">
             <div
-                class="flex flex-col pb-48 w-full items-center top-[20%] justify-start relative"
+                class="relative top-[20%] flex w-full flex-col items-center justify-start pb-48"
             >
                 <p class="text-3xl font-bold">what beats</p>
-                <p class="text-2xl text-center">{{ prevGuess }}?</p>
+                <p class="text-center text-2xl">{{ prevGuess }}?</p>
 
-                <p class="w-1/2 mt-2 text-center">{{ currentExplanation }}</p>
+                <p class="mt-2 w-1/2 text-center">{{ currentExplanation }}</p>
 
-                <p class="text-5xl my-5">
+                <p class="my-5 text-5xl">
                     {{ gameLost ? "❌" : currentEmoji }}
                 </p>
 
@@ -164,11 +164,11 @@ function uuidv4() {
                         @input="handleInput"
                         :disabled="isSendingRequest"
                         ref="input"
-                        class="pl-4 py-4 text-lg border border-1-black"
+                        class="border-1-black border py-4 pl-4 text-lg"
                     /><button
                         :disabled="isSendingRequest"
                         type="submit"
-                        class="p-4 border border-1-black text-lg bg-green-200"
+                        class="border-1-black border bg-green-200 p-4 text-lg"
                     >
                         <div v-if="isSendingRequest">
                             <i class="pi pi-spin pi-spinner"></i>
@@ -177,7 +177,7 @@ function uuidv4() {
                     </button>
                 </form>
 
-                <div class="mt-2 opacity-70 text-sm">
+                <div class="mt-2 text-sm opacity-70">
                     Score: {{ score }}
                     <span
                         v-if="!page.props.auth.user"
@@ -192,7 +192,7 @@ function uuidv4() {
                 </div>
 
                 <div
-                    class="flex flex-wrap mt-3 w-1/2 justify-center"
+                    class="mt-3 flex w-1/2 flex-wrap justify-center"
                     v-if="prevGuessesList.length > 1"
                 >
                     <div
@@ -200,7 +200,7 @@ function uuidv4() {
                             .slice()
                             .reverse()"
                     >
-                        <span class="font-semibold mx-1">{{ prevGuess }}</span>
+                        <span class="mx-1 font-semibold">{{ prevGuess }}</span>
                         <template v-if="index !== prevGuessesList.length - 1"
                             >🤜</template
                         >
@@ -216,7 +216,7 @@ function uuidv4() {
                     />
                 </div>
             </div>
-            <div class="mt-20 text-center xl:w-3/4 mx-auto">
+            <div class="mx-auto mt-20 text-center xl:w-3/4">
                 <DataTable :value="page.props.leaderboard">
                     <Column field="rank" header="Rank"></Column>
                     <Column field="name" header="Player"></Column>
