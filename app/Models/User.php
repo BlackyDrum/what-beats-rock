@@ -22,6 +22,7 @@ class User extends Authenticatable
         'email',
         'password',
         'highscore',
+        'highscore_game_id',
         'email_verified_at'
     ];
 

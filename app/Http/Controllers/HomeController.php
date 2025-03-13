@@ -17,13 +17,26 @@ class HomeController extends Controller
     public function index(Request $request)
     {
         $leaderboard = User::query()
-            ->select('name', 'highscore')
-            ->orderBy('highscore', 'desc')
+            ->select('name', 'highscore', 'highscore_game_id')
+            ->where('highscore', '>', 0)
+            ->orderByDesc('highscore')
             ->limit(50)
             ->get()
-            ->map(function ($entry, $index) {
-                $entry['rank'] = ++$index;
-                return $entry;
+            ->each(function ($entry, $index) {
+                $entry->rank = $index + 1;
+
+                if ($entry->highscore_game_id) {
+                    $guesses = Guess::query()
+                        ->where('game_id', $entry->highscore_game_id)
+                        ->orderByDesc('id')
+                        ->limit(2)
+                        ->pluck('guess');
+
+                    $entry->lastGuess = $guesses[0] ?? null;
+                    $entry->lostTo = $guesses[1] ?? null;
+                }
+
+                unset($entry->highscore_game_id);
             });
 
         return Inertia::render('Home', [
@@ -145,7 +158,8 @@ class HomeController extends Controller
 
             if ($currentGameScore > Auth::user()->highscore) {
                 User::find(Auth::id())->update([
-                    'highscore' => $currentGameScore
+                    'highscore' => $currentGameScore,
+                    'highscore_game_id' => $currentGame['id']
                 ]);
             }
         }

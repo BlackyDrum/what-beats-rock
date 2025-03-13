@@ -1,7 +1,7 @@
 <script setup>
 import { nextTick, onBeforeMount, onMounted, ref } from "vue";
 import { useToast } from "primevue/usetoast";
-import { Head, Link, usePage } from "@inertiajs/vue3";
+import { Head, Link, router, usePage } from "@inertiajs/vue3";
 
 import Toast from "primevue/toast";
 import { Button } from "primevue";
@@ -70,6 +70,8 @@ function guess() {
                 if (score.value > page.props.highscore) {
                     page.props.highscore = score.value;
                 }
+
+                router.reload({ only: ["leaderboard"] });
             }
 
             currentExplanation.value = response.data.explanation;
@@ -222,6 +224,8 @@ function uuidv4() {
                     <Column field="rank" header="Rank"></Column>
                     <Column field="name" header="Player"></Column>
                     <Column field="highscore" header="Score"></Column>
+                    <Column field="lastGuess" header="Last Guess"></Column>
+                    <Column field="lostTo" header="Lost To"></Column>
                 </DataTable>
             </div>
         </div>
