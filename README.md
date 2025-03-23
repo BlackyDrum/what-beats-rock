@@ -1,7 +1,7 @@
 # What beats rock
 
 <p align="center">
-  <img src="https://github.com/user-attachments/assets/bfa8e99b-bbae-4129-ae37-8994cb3fecd9" />
+  <img src="https://github.com/user-attachments/assets/8cc878c6-fdb3-49a9-8247-26e0ffadcbfc" />
 </p>
 
 ---
